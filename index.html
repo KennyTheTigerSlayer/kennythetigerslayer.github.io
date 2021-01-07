@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TGG - The Guessing Game</title>
+
+    <style>
+        * {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            padding: 0px;
+            box-sizing: border-box;
+            /* border: 1px solid blue; */
+            margin: 0px;
+        }
+        body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 400px;
+            height: 450px;
+            margin: 20px auto;
+            background-color: #f1f1f1;
+        }
+
+        header {
+            background-color: rgb(0, 174, 255);
+            border-radius: 15px 15px 0 0;
+            height: 20%;
+            align-content: center;
+        }
+        main {
+            height: 70%;
+            align-content: space-around;
+            background-color: #fff;
+        }
+        input {
+            width: 100px;
+            padding: 0 10px;
+            height: auto;
+        }
+        button {
+            padding: 0 10px;
+            height: auto;
+        }
+        .ctrPc {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+        .answer { 
+            height: 50px;
+        }
+        .return {
+            width: 100%;
+            height: 50%;
+            align-content: center;
+        }
+        .result {
+            background: rgb(255,0,0);
+            background: -webkit-linear-gradient(177deg, rgba(255,0,0,1) 0%, rgba(255,155,0,1) 17%, rgba(252,255,0,1) 32%, rgba(46,255,0,1) 51%, rgba(0,255,253,1) 67%, rgba(18,0,255,1) 83%, rgba(244,0,255,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            height: 30%;
+        }        
+        .hint {
+            text-align: center;
+            height: 50%;
+            width: 100%;
+        }
+        footer {
+            align-items: center;
+            height: 10%;
+            background-color: rgb(0, 174, 255);
+            border-radius: 0 0 15px 15px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <header class="ctrPc">
+        <h1>The Guessing Game</h1>
+        <h6>Hosted by KennyTheTigerSlayer</h6>
+    </header>
+    
+    <main class="ctrPc">
+        <h3>Guess a number from 1 to 100</h3>
+        <div class="ctrPc answer js-answer">
+            <input type="number" class="js-guessInput" min="1" max="100">
+            <button onclick="guessAttempt()" class="js-submit">Guess!</button>
+            <button onclick="init()">Restart!</button>
+        </div>
+        <div class="return ctrPc">
+            <h2 class="result js-result"></h2>
+            <h3 class="hint js-hint"></h3>
+        </div>
+    </main>
+    <footer class="ctrPc">
+        <h6>&copy; Copyright 2021 Kenny Chow, All Right Reserved.</h6>
+    </footer>
+
+
+    <script>
+        function qS(str){
+            return document.querySelector(str);
+        }
+        let correctNum;
+        let guessInput;
+        let result;
+        let hint;
+        let minNum;
+        let maxNum;
+
+        function init() {        
+            correctNum = Math.floor(Math.random() * 100) + 1;
+            guessInput = qS(".js-guessInput");
+            result = qS(".js-result");
+            hint = qS(".js-hint");
+            minNum = 1;
+            maxNum = 100;
+            result.innerText = "";
+            hint.innerText = "";
+        }
+        window.onload = init;
+
+        function guessAttempt() {
+            let guessInputVal = Number(guessInput.value);
+            if(guessInputVal > maxNum || guessInputVal < minNum){
+                result.innerText = "ONLY " + minNum + " - " + maxNum + "!";
+            } else if(guessInputVal == correctNum) {
+                result.innerText = "Bingo!!! Congrats!";
+                return hint.innerText = correctNum;
+            } else {
+                if(correctNum > guessInputVal) {
+                minNum = guessInputVal;
+                } else {
+                maxNum = guessInputVal;
+                }
+                result.innerText = "NOPE. Try again maybe:P?";
+                return hint.innerText = minNum + " - " + maxNum;
+            }
+        }    
+
+    </script>
+    
+</body>
+</html>
